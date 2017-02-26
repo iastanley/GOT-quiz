@@ -3,7 +3,7 @@ $(document).ready(function(){
 
 
   var state = {
-    currentQuestIndex: 0,
+    currentQuestion: 0,
     quizScore: 0
   }
 
@@ -48,6 +48,28 @@ $(document).ready(function(){
   $('#title').text(quiz.title);
   $('#description').text(quiz.description);
 
+  //initial view state
+  $('#welcome').show();
+  $('#questions').hide();
+  $('#end-page').hide();
+
+  //event listener for start
+  $('#start').click(function(){
+    $('#welcome').hide();
+    $('#questions').show();
+
+    renderQuestion();
+  });
+
+  //render a question
+  function renderQuestion(){
+    var html = '';
+    html += '<form class="multiple-choice">';
+    html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
+
+    $('#questions').html(html); 
+  }
+
   //update current question index
   function updateCurrentQuestion(state){
     state.currentQuestIndex++;
@@ -68,10 +90,7 @@ $(document).ready(function(){
     return state.questions[currentQuestIndex].answers[userAnswer].correct;
   }
 
-  //render a question
-  function renderQuestion(state, element){
-    //render the current question to HTML
-  }
+
 
   function toggleButton(submitButton, nextButton){
     submitButton.toggleClass('display-btn');

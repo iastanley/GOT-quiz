@@ -30,7 +30,7 @@ ul li {
 }
 
 .button {
-  display: none;
+  display: inline-block;
   width: 100px;
   background-color: #000;
   color: #fff;
@@ -46,6 +46,6 @@ ul li {
   outline: none;
 }
 
-.display-btn {
+/*.display-btn {
   display: inline-block;
-}
+}*/
