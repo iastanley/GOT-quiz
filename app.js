@@ -1,7 +1,4 @@
 $(document).ready(function(){
-
-
-
   var state = {
     currentQuestion: 0,
     quizScore: 0
@@ -66,8 +63,17 @@ $(document).ready(function(){
     var html = '';
     html += '<form class="multiple-choice">';
     html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
+    html += '<ul>';
+    //loop to create list of answers
+    for (var i = 0; i < quiz.questions[state.currentQuestion].answers.length; i++) {
+      html += '<li><input type="radio" value="' + i + '" name="answer" required>' + quiz.questions[state.currentQuestion].answers[i] +   '</input></li>'
+    }
+    //finish the form later!
+    html += '</ul>';
+    html += '<button type="submit" name="button" class="button submit-btn display-btn">Submit</button>';
+    html += '</form>';
 
-    $('#questions').html(html); 
+    $('#questions').html(html);
   }
 
   //update current question index
