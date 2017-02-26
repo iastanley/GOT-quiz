@@ -39,6 +39,11 @@ ul li {
   padding-bottom: 10px;
   border: 1px solid black;
   margin-top: 100px;
+  cursor: pointer;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .display-btn {
