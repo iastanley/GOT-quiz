@@ -1,0 +1,46 @@
+header {
+  background-color: #a1a1a1;
+  height: 100px;
+  padding-top: 10px;
+}
+
+main {
+  max-width: 40%;
+  margin: 50px auto;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  color: white;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+.button {
+  display: none;
+  width: 100px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 1px solid black;
+  margin-top: 100px;
+}
+
+.display-btn {
+  display: inline-block;
+}
