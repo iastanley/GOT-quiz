@@ -1,9 +1,11 @@
 $(document).ready(function(){
+  //object for storing state of quiz app
   var state = {
     currentQuestion: 0,
     quizScore: 0
   }
 
+  //object for storing all custom values for GOT quiz
   var quiz = {
     title: "Game of Thrones Trivia",
     description: "How well do you know the Game of Thrones? Click below to find out.",
@@ -41,22 +43,74 @@ $(document).ready(function(){
     ]
   }
 
-  //set title and description
-  $('#title').text(quiz.title);
-  $('#description').text(quiz.description);
-
-  //initial view state
-  $('#welcome').show();
-  $('#questions').hide();
-  $('#end-page').hide();
+  //initialize page
+  init();
 
   //event listener for start
   $('#start').click(function(){
     $('#welcome').hide();
     $('#questions').show();
-
     renderQuestion();
   });
+
+  //event listener for submit button
+  //this breaks required in html form
+  $('#container').on('click', '#submit', function(event){
+    event.preventDefault();
+    //get value from radio button
+    var userAnswer = $('input[name=answer]:checked', '.multiple-choice').val();
+    var correctAnswer = quiz.questions[state.currentQuestion].correct;
+    //check if userAnswer === correct answer
+    //using double equals to check string value against number
+    if (userAnswer == correctAnswer){
+      $('input[name=answer]:checked').parent().css('color', 'green');
+      state.quizScore += 1;
+    } else {
+      //build selector for correct input
+      var correctInput = 'input[value="' + correctAnswer +'"]';
+      //change style of checked input to wrong feedback
+      $('input[name=answer]:checked').parent().css('color', 'red');
+      //change style of correct input to correct feedback
+      $(correctInput).parent().css('color', 'green');
+    }
+    //switch view of submit and next buttons
+    $('#submit').hide();
+    $('#next').show();
+  });
+
+  //event listener for next button
+  $('#container').on('click', '#next', function(event){
+    event.preventDefault();
+    //update state of current question
+    state.currentQuestion += 1;
+    if (state.currentQuestion < quiz.questions.length) {
+      //render the next question
+      renderQuestion();
+    } else {
+      $('#questions').hide();
+      $('#end-page').show();
+      renderEnd();
+    }
+  });
+
+  //event listener for try again button
+  $('#container').on('click', '#try-again', function(){
+    init();
+  });
+
+  //initialize view and state
+  function init(){
+    //set title and description
+    $('#title').text(quiz.title);
+    $('#description').text(quiz.description);
+    //initial view
+    $('#welcome').show();
+    $('#questions').hide();
+    $('#end-page').hide();
+    //initialize state
+    state.currentQuestion = 0;
+    state.quizScore = 0;
+  }
 
   //render a question
   function renderQuestion(){
@@ -70,74 +124,27 @@ $(document).ready(function(){
     }
     //finish the form later!
     html += '</ul>';
-    html += '<div><button type="submit" name="button" class="button submit-btn display-btn">Submit</button></div>';
+    html += '<div>';
+    html += '<button id="submit" type="submit" name="button" class="button">Submit</button>';
+    html += '<button id="next" type="submit" name="button" class="button">Next</button>';
+    html+='</div>';
     html += '</form>';
-
+    //render html to questions div
     $('#questions').html(html);
+    //initialize state of buttons
+    $('#submit').show();
+    $('#next').hide();
   }
 
-  //update current question index
-  function updateCurrentQuestion(state){
-    state.currentQuestIndex++;
+  function renderEnd(){
+    var numberCorrect = state.quizScore;
+    var numberWrong = quiz.questions.length - numberCorrect;
+    var html = '';
+    html += "<p>Congratulations! You're Finished!</p>";
+    html += '<p><span class="number-correct">' + numberCorrect + '</span> Correct</p>';
+    html += '<p><span class="number-wrong">' + numberWrong + '</span> Wrong</p>';
+    html += '<button id="try-again" class="button">Try Again</button>';
+    //render html in end-page div
+    $('#end-page').html(html);
   }
-
-  //update score
-  function updateScore(state, userAnswer){
-    //if user answer is correct
-    if (isCorrect(state, userAnswer)()) {
-      state.quizScore++;
-    }
-  }
-
-  //check if the users answer is correct for current question
-  function isCorrect(state, userAnswer){
-    //returns true if userAnswer is correct
-    //userAnswer value will serve as index for answers array
-    return state.questions[currentQuestIndex].answers[userAnswer].correct;
-  }
-
-
-
-  function toggleButton(submitButton, nextButton){
-    submitButton.toggleClass('display-btn');
-    nextButton.toggleClass('display-btn');
-  }
-
-  //render answer whether correct or wrong
-  function renderFeedback(state, userAnswer, answerElement, progressElement){
-    //if the answer is wrong render feedback for wrong answer
-    //if answer is correct render feedback for correct answer
-    //update progressElement with correct out of total from state
-  }
-
-  //EVENT LISTENERS
-
-  //submit answer event handlers
-  function submitHandler(state, formElement, answerElement, progressElement){
-    formElement.on('submit', function(event){
-      event.preventDefault();
-      //store user answer
-      var userAnswer = Number($('input[name="answer"]:checked').val());
-
-      updateScore(state, userAnswer);
-      renderFeedback(state, userAnswer, answerElement, progressElement);
-      toggleButton($('.submit-btn'), $('.next-btn'));
-    });
-  }
-
-  //next button handler
-  function nextHandler(state, formElement, nextBtnSelector){
-    formElement.on('click', nextBtnSelector, function(){
-      if (state.currentQuestIndex < state.questions.length) {
-        updateCurrentQuestion(state);
-        renderQuestion(state, formElement);
-        /*update progress bar would also go here*/
-        toggleButton($('.submit-btn'), $('.next-btn'));
-      } else {
-        //link to new html page
-        window.location.href = 'end-page.html';
-      }
-    });
-  }
-
 });
