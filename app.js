@@ -122,13 +122,26 @@ $(document).ready(function(){
     for (var i = 0; i < quiz.questions[state.currentQuestion].answers.length; i++) {
       html += '<li><input type="radio" value="' + i + '" name="answer" required>' + quiz.questions[state.currentQuestion].answers[i] +   '</input></li>'
     }
-    //finish the form later!
     html += '</ul>';
     html += '<div>';
     html += '<button id="submit" type="submit" name="button" class="button">Submit</button>';
     html += '<button id="next" type="submit" name="button" class="button">Next</button>';
     html+='</div>';
     html += '</form>';
+    //building the progress bar
+    html += '<div id="progress"><div>';
+    //generate progress bar
+    for (var i = 0; i < quiz.questions.length; i++) {
+      if (i <= state.currentQuestion) {
+        html += '<span class="completed"></span>';
+      } else {
+        html+= '<span></span>';
+      }
+    }
+    //end of span div
+    html += '</div>'
+    //generate feedback
+    html += '<p>' + state.quizScore + ' Out of ' + quiz.questions.length + ' Correct</p></div>';
     //render html to questions div
     $('#questions').html(html);
     //initialize state of buttons

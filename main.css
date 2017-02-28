@@ -47,6 +47,22 @@ footer {
   outline: none;
 }
 
+#progress {
+  margin-top: 150px;
+}
+
+#progress span {
+  display: inline-block;
+  width: 50px;
+  height: 5px;
+  margin: auto 5px;
+  background-color: #a1a1a1;
+}
+
+#progress span.completed {
+  background-color: #000;
+}
+
 #title {
   text-align: center;
   color: white;
