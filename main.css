@@ -47,6 +47,16 @@ footer {
   outline: none;
 }
 
+.number-correct {
+  color: green;
+  font-weight: bold;
+}
+
+.number-wrong {
+  color: red;
+  font-weight: bold;
+}
+
 #progress {
   margin-top: 150px;
 }
