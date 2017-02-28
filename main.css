@@ -4,29 +4,30 @@ header {
   padding-top: 10px;
 }
 
-main {
-  max-width: 40%;
-  margin: 50px auto;
-  text-align: center;
-}
-
-footer {
-  text-align: center;
-}
-
-.title {
-  text-align: center;
-  color: white;
-}
-
 ul {
   list-style: none;
+  display: inline-block;
   margin: 0;
   padding: 0;
 }
 
 ul li {
   margin-bottom: 10px;
+  text-align: left;
+}
+
+input {
+  margin-right: 10px;
+}
+
+footer {
+  text-align: center;
+}
+
+.main {
+  max-width: 40%;
+  margin: 50px auto;
+  text-align: center;
 }
 
 .button {
@@ -46,6 +47,10 @@ ul li {
   outline: none;
 }
 
+#title {
+  text-align: center;
+  color: white;
+}
 /*.display-btn {
   display: inline-block;
 }*/

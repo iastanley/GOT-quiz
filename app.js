@@ -70,7 +70,7 @@ $(document).ready(function(){
     }
     //finish the form later!
     html += '</ul>';
-    html += '<button type="submit" name="button" class="button submit-btn display-btn">Submit</button>';
+    html += '<div><button type="submit" name="button" class="button submit-btn display-btn">Submit</button></div>';
     html += '</form>';
 
     $('#questions').html(html);
