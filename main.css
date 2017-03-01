@@ -1,5 +1,5 @@
 header {
-  background-color: #a1a1a1;
+  background-color: #000;
   height: 100px;
   padding-top: 10px;
 }
@@ -14,6 +14,7 @@ ul {
 ul li {
   margin-bottom: 10px;
   text-align: left;
+  clear: both;
 }
 
 input {
@@ -22,6 +23,13 @@ input {
 
 footer {
   text-align: center;
+}
+
+.fa {
+  visibility: hidden;
+  display: inline-block;
+  position: absolute;
+  padding-left: 5px;
 }
 
 .main {
@@ -47,6 +55,11 @@ footer {
   outline: none;
 }
 
+.question-text {
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
 .number-correct {
   color: green;
   font-weight: bold;
@@ -55,6 +68,20 @@ footer {
 .number-wrong {
   color: red;
   font-weight: bold;
+}
+
+.result {
+  display: inline-block;
+}
+
+.js-wrong {
+  color: red;
+  visibility: visible;
+}
+
+.js-correct {
+  color: green;
+  visibility: visible;
 }
 
 #progress {
@@ -74,9 +101,9 @@ footer {
 }
 
 #title {
+  text-transform: uppercase;
+  font-weight: lighter;
   text-align: center;
   color: white;
+  letter-spacing: 5px;
 }
-/*.display-btn {
-  display: inline-block;
-}*/

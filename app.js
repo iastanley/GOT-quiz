@@ -88,15 +88,15 @@ $(document).ready(function(){
       //check if userAnswer === correct answer
       //using double equals to check string value against number
       if (userAnswer == correctAnswer){
-        $('input[name=answer]:checked').parent().css('color', 'green');
+        $('input[name=answer]:checked').siblings('.fa-check').addClass('js-correct');
         state.quizScore += 1;
       } else {
         //build selector for correct input
         var correctInput = 'input[value="' + correctAnswer +'"]';
         //change style of checked input to wrong feedback
-        $('input[name=answer]:checked').parent().css('color', 'red');
+        $('input[name=answer]:checked').siblings('.fa-times').addClass('js-wrong');
         //change style of correct input to correct feedback
-        $(correctInput).parent().css('color', 'green');
+        $(correctInput).siblings('.fa-check').addClass('js-correct');
       }
       //switch view of submit and next buttons
       $('#submit').hide();
@@ -147,12 +147,17 @@ $(document).ready(function(){
   //render a question
   function renderQuestion(){
     var html = '';
+    var numAnswers = quiz.questions[state.currentQuestion].answers.length;
     html += '<form class="multiple-choice">';
     html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
     html += '<ul>';
     //loop to create list of answers
-    for (var i = 0; i < quiz.questions[state.currentQuestion].answers.length; i++) {
-      html += '<li><input type="radio" value="' + i + '" name="answer">' + quiz.questions[state.currentQuestion].answers[i] +   '</input></li>'
+    for (var i = 0; i < numAnswers; i++) {
+      html += '<li><input type="radio" value="' + i + '" name="answer">' + quiz.questions[state.currentQuestion].answers[i]
+      + '</input>'
+      + '<i class="fa fa-times" aria-hidden="true"></i>'
+      + '<i class="fa fa-check" aria-hidden="true"></i>'
+      + '</li>'
     }
     html += '</ul>';
     html += '<div>';
@@ -186,8 +191,8 @@ $(document).ready(function(){
     var numberWrong = quiz.questions.length - numberCorrect;
     var html = '';
     html += "<p>Congratulations! You're Finished!</p>";
-    html += '<p><span class="number-correct">' + numberCorrect + '</span> Correct</p>';
-    html += '<p><span class="number-wrong">' + numberWrong + '</span> Wrong</p>';
+    html += '<div><p class="result"><span class="number-correct">' + numberCorrect + '</span> Correct</p>';
+    html += '<p class="result"><span class="number-wrong">' + numberWrong + '</span> Wrong</p></div>';
     html += '<button id="try-again" class="button">Try Again</button>';
     //render html in end-page div
     $('#end-page').html(html);
