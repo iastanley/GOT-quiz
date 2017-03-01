@@ -95,13 +95,11 @@ footer {
 }
 
 #progress div {
-  /*width: 80%;*/
   margin: 0 auto;
 }
 
 #progress span {
   display: inline-block;
-  /*width: 20px;*/
   height: 5px;
   margin: auto 5px;
   background-color: #a1a1a1;

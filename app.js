@@ -59,26 +59,6 @@ $(document).ready(function(){
           'Tywin Lannister'
         ],
         correct: 3
-      },
-      {
-        qText: "Which of the following is NOT one of Dany's dragons?",
-        answers: [
-          'Balerion',
-          'Viserion',
-          'Rhaegal',
-          'Drogon'
-        ],
-        correct: 0
-      },
-      {
-        qText: "Whom has Tyrion killed?",
-        answers: [
-          'Joffery Lannister',
-          'Davos Seaworth',
-          'Catelyn Stark',
-          'Tywin Lannister'
-        ],
-        correct: 3
       }
     ]
   }
@@ -95,11 +75,6 @@ $(document).ready(function(){
 
   //event listener for input
   $('#container').on('click', 'input', function(){
-    //submit form on input click allows immediate feedback
-    // $('#quiz-form').submit(function(event){
-    //   event.preventDefault();
-    //   console.log('submit');
-    // });
     //get value from radio button
     var userAnswer = $(this).val();
     var correctAnswer = quiz.questions[state.currentQuestion].correct;
@@ -163,7 +138,7 @@ $(document).ready(function(){
   //render a question
   function renderQuestion(){
     var html = '';
-    //calculate width
+    //calculate width of progress bar spans
     var width = 200/quiz.questions.length;
     var numAnswers = quiz.questions[state.currentQuestion].answers.length;
     html += '<form class="multiple-choice" id="quiz-form">';
