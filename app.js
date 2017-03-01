@@ -58,24 +58,35 @@ $(document).ready(function(){
   $('#container').on('click', '#submit', function(event){
     event.preventDefault();
     //get value from radio button
-    var userAnswer = $('input[name=answer]:checked', '.multiple-choice').val();
-    var correctAnswer = quiz.questions[state.currentQuestion].correct;
-    //check if userAnswer === correct answer
-    //using double equals to check string value against number
-    if (userAnswer == correctAnswer){
-      $('input[name=answer]:checked').parent().css('color', 'green');
-      state.quizScore += 1;
-    } else {
-      //build selector for correct input
-      var correctInput = 'input[value="' + correctAnswer +'"]';
-      //change style of checked input to wrong feedback
-      $('input[name=answer]:checked').parent().css('color', 'red');
-      //change style of correct input to correct feedback
-      $(correctInput).parent().css('color', 'green');
+    try {
+      var userAnswer = $('input[name=answer]:checked', '.multiple-choice').val();
+      if (!userAnswer) {
+        throw console.error('no user input');
+      }
+      var correctAnswer = quiz.questions[state.currentQuestion].correct;
+      //check if userAnswer === correct answer
+      //using double equals to check string value against number
+      if (userAnswer == correctAnswer){
+        $('input[name=answer]:checked').parent().css('color', 'green');
+        state.quizScore += 1;
+      } else {
+        //build selector for correct input
+        var correctInput = 'input[value="' + correctAnswer +'"]';
+        //change style of checked input to wrong feedback
+        $('input[name=answer]:checked').parent().css('color', 'red');
+        //change style of correct input to correct feedback
+        $(correctInput).parent().css('color', 'green');
+      }
+      //switch view of submit and next buttons
+      $('#submit').hide();
+      $('#next').show();
+      }
+     catch (error) {
+      alert('Please select an answer.');
     }
-    //switch view of submit and next buttons
-    $('#submit').hide();
-    $('#next').show();
+
+
+
   });
 
   //event listener for next button
@@ -120,7 +131,7 @@ $(document).ready(function(){
     html += '<ul>';
     //loop to create list of answers
     for (var i = 0; i < quiz.questions[state.currentQuestion].answers.length; i++) {
-      html += '<li><input type="radio" value="' + i + '" name="answer" required>' + quiz.questions[state.currentQuestion].answers[i] +   '</input></li>'
+      html += '<li><input type="radio" value="' + i + '" name="answer">' + quiz.questions[state.currentQuestion].answers[i] +   '</input></li>'
     }
     html += '</ul>';
     html += '<div>';
