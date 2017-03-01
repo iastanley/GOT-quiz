@@ -1,11 +1,13 @@
-body {
-  min-width: 360px;
+body * {
+  box-sizing: border-box;
 }
 
 header {
   background-color: #000;
   height: 100px;
   padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 ul {
@@ -93,13 +95,13 @@ footer {
 }
 
 #progress div {
-  /*max-width: 80%;*/
+  /*width: 80%;*/
   margin: 0 auto;
 }
 
 #progress span {
   display: inline-block;
-  width: 20px;
+  /*width: 20px;*/
   height: 5px;
   margin: auto 5px;
   background-color: #a1a1a1;
@@ -120,4 +122,14 @@ footer {
 #description {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+@media only screen and (max-width: 550px) {
+  header {
+    padding-top: 25px;
+  }
+
+  h1 {
+    font-size: 1em;
+  }
 }

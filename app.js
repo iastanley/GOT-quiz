@@ -59,6 +59,26 @@ $(document).ready(function(){
           'Tywin Lannister'
         ],
         correct: 3
+      },
+      {
+        qText: "Which of the following is NOT one of Dany's dragons?",
+        answers: [
+          'Balerion',
+          'Viserion',
+          'Rhaegal',
+          'Drogon'
+        ],
+        correct: 0
+      },
+      {
+        qText: "Whom has Tyrion killed?",
+        answers: [
+          'Joffery Lannister',
+          'Davos Seaworth',
+          'Catelyn Stark',
+          'Tywin Lannister'
+        ],
+        correct: 3
       }
     ]
   }
@@ -76,22 +96,23 @@ $(document).ready(function(){
   //event listener for input
   $('#container').on('click', 'input', function(){
     //submit form on input click allows immediate feedback
-    $('#quiz-form').submit(function(event){
-      event.preventDefault();
-    });
+    // $('#quiz-form').submit(function(event){
+    //   event.preventDefault();
+    //   console.log('submit');
+    // });
     //get value from radio button
     var userAnswer = $(this).val();
     var correctAnswer = quiz.questions[state.currentQuestion].correct;
     //add feedback styles based on userAnswer
     //using double equals to check string value against number
     if (userAnswer == correctAnswer){
-      $('input[name=answer]:checked').siblings('.fa-check').addClass('js-correct');
+      $(this).siblings('.fa-check').addClass('js-correct');
       state.quizScore += 1;
     } else {
       //build selector for correct input
       var correctInput = 'input[value="' + correctAnswer +'"]';
       //change style of checked input to wrong feedback
-      $('input[name=answer]:checked').siblings('.fa-times').addClass('js-wrong');
+      $(this).siblings('.fa-times').addClass('js-wrong');
       //change style of correct input to correct feedback
       $(correctInput).siblings('.fa-check').addClass('js-correct');
     }
@@ -115,6 +136,7 @@ $(document).ready(function(){
         renderEnd();
       }
     } catch (error) {
+      //replace with styled error message
       alert('Please select an answer.');
     }
   });
@@ -141,6 +163,8 @@ $(document).ready(function(){
   //render a question
   function renderQuestion(){
     var html = '';
+    //calculate width
+    var width = 200/quiz.questions.length;
     var numAnswers = quiz.questions[state.currentQuestion].answers.length;
     html += '<form class="multiple-choice" id="quiz-form">';
     html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
@@ -164,9 +188,9 @@ $(document).ready(function(){
     //generate progress bar
     for (var i = 0; i < quiz.questions.length; i++) {
       if (i <= state.currentQuestion) {
-        html += '<span class="completed"></span>';
+        html += '<span class="completed" style="width:' + width + 'px"></span>';
       } else {
-        html+= '<span></span>';
+        html+= '<span style="width:' + width + 'px"></span>';
       }
     }
     //end of span div
