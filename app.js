@@ -73,55 +73,49 @@ $(document).ready(function(){
     renderQuestion();
   });
 
-  //event listener for submit button
-  //this breaks required in html form
-  $('#container').on('click', '#submit', function(event){
-    event.preventDefault();
+  //event listener for input
+  $('#container').on('click', 'input', function(){
+    //submit form on input click allows immediate feedback
+    $('#quiz-form').submit(function(event){
+      event.preventDefault();
+    });
     //get value from radio button
-    try {
-      var userAnswer = $('input[name=answer]:checked', '.multiple-choice').val();
-      //exception thrown if user doesn't select an answer
-      if (!userAnswer) {
-        throw console.error('no user input');
-      }
-      var correctAnswer = quiz.questions[state.currentQuestion].correct;
-      //check if userAnswer === correct answer
-      //using double equals to check string value against number
-      if (userAnswer == correctAnswer){
-        $('input[name=answer]:checked').siblings('.fa-check').addClass('js-correct');
-        state.quizScore += 1;
-      } else {
-        //build selector for correct input
-        var correctInput = 'input[value="' + correctAnswer +'"]';
-        //change style of checked input to wrong feedback
-        $('input[name=answer]:checked').siblings('.fa-times').addClass('js-wrong');
-        //change style of correct input to correct feedback
-        $(correctInput).siblings('.fa-check').addClass('js-correct');
-      }
-      //switch view of submit and next buttons
-      $('#submit').hide();
-      $('#next').show();
-      }
-     catch (error) {
-      alert('Please select an answer.');
+    var userAnswer = $(this).val();
+    var correctAnswer = quiz.questions[state.currentQuestion].correct;
+    //add feedback styles based on userAnswer
+    //using double equals to check string value against number
+    if (userAnswer == correctAnswer){
+      $('input[name=answer]:checked').siblings('.fa-check').addClass('js-correct');
+      state.quizScore += 1;
+    } else {
+      //build selector for correct input
+      var correctInput = 'input[value="' + correctAnswer +'"]';
+      //change style of checked input to wrong feedback
+      $('input[name=answer]:checked').siblings('.fa-times').addClass('js-wrong');
+      //change style of correct input to correct feedback
+      $(correctInput).siblings('.fa-check').addClass('js-correct');
     }
-
-
-
   });
 
   //event listener for next button
-  $('#container').on('click', '#next', function(event){
-    event.preventDefault();
-    //update state of current question
-    state.currentQuestion += 1;
-    if (state.currentQuestion < quiz.questions.length) {
-      //render the next question
-      renderQuestion();
-    } else {
-      $('#questions').hide();
-      $('#end-page').show();
-      renderEnd();
+  $('#container').on('click', '#next', function(){
+    //try catch needed to require user input
+    try {
+      if (!$('input[name=answer]:checked', '#quiz-form').val()) {
+        throw console.error('no user input');
+      }
+      //update state of current question
+      state.currentQuestion += 1;
+      if (state.currentQuestion < quiz.questions.length) {
+        //render the next question
+        renderQuestion();
+      } else {
+        $('#questions').hide();
+        $('#end-page').show();
+        renderEnd();
+      }
+    } catch (error) {
+      alert('Please select an answer.');
     }
   });
 
@@ -148,7 +142,7 @@ $(document).ready(function(){
   function renderQuestion(){
     var html = '';
     var numAnswers = quiz.questions[state.currentQuestion].answers.length;
-    html += '<form class="multiple-choice">';
+    html += '<form class="multiple-choice" id="quiz-form">';
     html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
     html += '<ul>';
     //loop to create list of answers
@@ -161,8 +155,8 @@ $(document).ready(function(){
     }
     html += '</ul>';
     html += '<div>';
-    html += '<button id="submit" type="submit" name="button" class="button">Submit</button>';
-    html += '<button id="next" type="submit" name="button" class="button">Next</button>';
+    // html += '<button id="submit" type="submit" name="button" class="button">Submit</button>';
+    html += '<button id="next" type="button" name="button" class="button">Next</button>';
     html+='</div>';
     html += '</form>';
     //building the progress bar
@@ -178,12 +172,9 @@ $(document).ready(function(){
     //end of span div
     html += '</div>'
     //generate feedback
-    html += '<p>' + state.quizScore + ' Out of ' + quiz.questions.length + ' Correct</p></div>';
+    html += '<p><strong>' + state.quizScore + '</strong> out of <strong>' + quiz.questions.length + '</strong> Correct</p></div>';
     //render html to questions div
     $('#questions').html(html);
-    //initialize state of buttons
-    $('#submit').show();
-    $('#next').hide();
   }
 
   function renderEnd(){
