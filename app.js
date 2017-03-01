@@ -39,6 +39,26 @@ $(document).ready(function(){
           'Olenna Tyrell'
         ],
         correct: 3
+      },
+      {
+        qText: "Which of the following is NOT one of Dany's dragons?",
+        answers: [
+          'Balerion',
+          'Viserion',
+          'Rhaegal',
+          'Drogon'
+        ],
+        correct: 0
+      },
+      {
+        qText: "Whom has Tyrion killed?",
+        answers: [
+          'Joffery Lannister',
+          'Davos Seaworth',
+          'Catelyn Stark',
+          'Tywin Lannister'
+        ],
+        correct: 3
       }
     ]
   }
@@ -60,6 +80,7 @@ $(document).ready(function(){
     //get value from radio button
     try {
       var userAnswer = $('input[name=answer]:checked', '.multiple-choice').val();
+      //exception thrown if user doesn't select an answer
       if (!userAnswer) {
         throw console.error('no user input');
       }
