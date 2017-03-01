@@ -72,6 +72,7 @@ footer {
 
 .result {
   display: inline-block;
+  margin: 15px;
 }
 
 .js-wrong {
