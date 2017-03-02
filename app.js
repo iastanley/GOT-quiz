@@ -51,7 +51,7 @@ $(document).ready(function(){
         correct: 0
       },
       {
-        qText: "Whom has Tyrion killed?",
+        qText: "Who has Tyrion killed?",
         answers: [
           'Joffery Lannister',
           'Davos Seaworth',
@@ -75,6 +75,8 @@ $(document).ready(function(){
 
   //event listener for input
   $('#container').on('click', 'input', function(){
+    //clear any prior error message
+    removeErrorMessage();
     //get value from radio button
     var userAnswer = $(this).val();
     var correctAnswer = quiz.questions[state.currentQuestion].correct;
@@ -112,7 +114,7 @@ $(document).ready(function(){
       }
     } catch (error) {
       //replace with styled error message
-      alert('Please select an answer.');
+      addErrorMessage();
     }
   });
 
@@ -143,7 +145,7 @@ $(document).ready(function(){
     var numAnswers = quiz.questions[state.currentQuestion].answers.length;
     html += '<form class="multiple-choice" id="quiz-form">';
     html += '<p class="question-text">' + quiz.questions[state.currentQuestion].qText + '</p>';
-    html += '<ul>';
+    html += '<ul class="js-error-message">';
     //loop to create list of answers
     for (var i = 0; i < numAnswers; i++) {
       html += '<li><input type="radio" value="' + i + '" name="answer">' + quiz.questions[state.currentQuestion].answers[i]
@@ -152,6 +154,7 @@ $(document).ready(function(){
       + '<i class="fa fa-check" aria-hidden="true"></i>'
       + '</li>'
     }
+    html += '<li class="js-error-message">Please select an answer</li>'
     html += '</ul>';
     html += '<div>';
     // html += '<button id="submit" type="submit" name="button" class="button">Submit</button>';
@@ -186,5 +189,14 @@ $(document).ready(function(){
     html += '<button id="try-again" class="button">Try Again</button>';
     //render html in end-page div
     $('#end-page').html(html);
+  }
+
+  //ERROR MESSAGE FOR NO USER INPUT
+  function addErrorMessage(){
+    $('.js-error-message').addClass('error');
+  }
+
+  function removeErrorMessage(){
+    $('.js-error-message').removeClass('error');
   }
 });

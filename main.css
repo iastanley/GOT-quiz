@@ -14,7 +14,7 @@ ul {
   list-style: none;
   display: inline-block;
   margin: 0;
-  padding: 0;
+  padding: 5px;
 }
 
 ul li {
@@ -89,6 +89,22 @@ footer {
   color: green;
   visibility: visible;
 }
+
+/*******ERROR MESSAGE******/
+li.js-error-message {
+  text-align: center;
+  visibility: hidden;
+  color: red;
+}
+
+li.error {
+  visibility: visible;
+}
+
+ul.error {
+  border: 2px solid red;
+}
+/**************************/
 
 #progress {
   margin-top: 100px;
