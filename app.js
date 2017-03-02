@@ -74,7 +74,9 @@ $(document).ready(function(){
   });
 
   //event listener for input
-  $('#container').on('click', 'input', function(){
+  $('#container').on('click', 'input', function(event){
+    //stop event bubbling on mobile Safari
+    event.stopPropagation();
     //clear any prior error message
     removeErrorMessage();
     //get value from radio button
